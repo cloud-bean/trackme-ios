@@ -24,9 +24,15 @@
             <div class="item item-divider">设备定位</div>
             <div class="item item-body">
                 <div>
+                    <label class="item item-input">
+                        <span class="input-label">设备ID：</span>
+                        <input type="text" name="carId" ng-model="carId" >
+                    </label>
                     <button  ng-click="getPosition()" class="button button-block button-positive">定位</button>
-                    <br/>
                     位置：<span> {{ currentPosition }} </span>
+                    警报：<span> {{ currentAlarm }} </span>
+                    <div id="map_container" style="width:98%;margin:0 auto;padding:0; height:400px;background:#ccc;">
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,0 +1,13 @@
+<ion-view title="Car Detail">
+    <ion-content>
+        <div class="list card">
+            <div class="item item-avatar">
+                <img src="../img/car_grey.png" >
+                <h2>{{ car.name }} </h2>
+                <p> {{car.devtype }}</p>
+            </div>
+            <my-amap devid="car.devId" lng="longitude" lat="latitude">
+            </my-amap>
+        </div>
+    </ion-content>
+</ion-view>

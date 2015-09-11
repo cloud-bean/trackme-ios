@@ -38,7 +38,7 @@ angular.module('starter.directives', [])
 
             },
             restrict: 'E',
-            templateUrl: '../templates/amap.directive.html',
+            templateUrl: "../templates/amap.directive.html",
             replace: true,
             link: function(scope, iElm, iAttrs) {
                 // todo: first init to get the pos of the device

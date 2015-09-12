@@ -3,9 +3,9 @@ angular.module('starter.directives', [])
         // Runs during compile
         return {
             scope: {
-                lng: '=',
-                lat: '=',
-                devid: '='
+                lng: '@',
+                lat: '@',
+                devid: '@'
             },
             controller: function($scope, $element, $attrs, $transclude) {
                 $scope.showPosition = function() {
@@ -34,7 +34,6 @@ angular.module('starter.directives', [])
                     });
                     marker.setMap(mapObj);
                 };
-
 
             },
             restrict: 'E',

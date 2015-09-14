@@ -1,19 +1,21 @@
 <ion-view view-title="设备组">
-  <ion-content>
-    <ion-list>
-      <ion-item ng-class-even="'stable-bg'" ng-class-odd="'light-bg'" ng-repeat="group in groups track by $index" type="item-text-wrap" >
-       
-        <h2 class="">{{group.vehGroupName}}</h2>
-        
-          <ion-list>
-            <a class="item item-icon-left item-icon-right" ng-repeat="car in cars| parentGroup:group.vehGroupID" ng-href="#/cars/{{car.id}}">
-              <i ng-class="{'0': '', '1': 'positive','2': 'balanced' }[car.alive]" class="icon ion-model-s" ></i>
-              {{ car.name }}
-              <i class="icon ion-chevron-right icon-accessory"></i>
-            </a>
-          </ion-list>
-        
-      </ion-item>
-    </ion-list>
-  </ion-content>
+    <ion-content>
+        <ion-list>
+            <ion-item 
+              ng-class-even="'stable-bg'" 
+              ng-class-odd="'light-bg'" 
+              ng-repeat="group in groups track by $index" type="item-text-wrap">
+                <h2>{{group.vehGroupName}}</h2>
+                <ion-list>
+                    <a class="item item-icon-left item-icon-right" 
+                      ng-repeat="car in cars| parentGroup:group.vehGroupID" 
+                      ng-href="#/cars/{{car.id}}">
+                        <i ng-class="{positive: car.alive}" 
+                           class="icon ion-model-s"></i> {{ car.name }}
+                        <i class="icon ion-chevron-right icon-accessory"></i>
+                    </a>
+                </ion-list>
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </ion-view>

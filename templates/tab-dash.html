@@ -8,17 +8,23 @@
                         <span class="input-label">用户名</span>
                         <input type="text" name="username" ng-model="username">
                     </label>
-                    <label class="item item-input">
+                    <label class="item item-input ">
                         <span class="input-label">密码</span>
                         <input type="password" name="password" ng-model="password">
                     </label>
+                  
+                   
+                   <div class="item item-checkbox">
+                    <label class="checkbox">
+                        <input type="checkbox"> 
+                    </label>保存密码
+                   </div>
+                   
                     <button class="button button-block button-positive" ng-click="login()">
                         登录
                     </button>
-                   
                 </div>
             </div>
         </div>
-        
     </ion-content>
 </ion-view>

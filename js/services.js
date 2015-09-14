@@ -19,7 +19,7 @@ angular.module('starter.services', [])
 
             positionRef.on("value", function(snapshot) {
                 console.log(snapshot.val());
-                deferred.resolve(snapshot.val());
+                snapshot.val() ? deferred.resolve(snapshot.val()) : deferred.reject("no data");
             }, function(errorObject) {
                 console.log("The read failed: " + errorObject.code);
                 deferred.reject("The read failed: " + errorObject.code);
@@ -43,7 +43,7 @@ angular.module('starter.services', [])
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                timeout: 8000
+                timeout: 2000
             }).success(function(data, status, headers, config) {
                 deferred.resolve(data);
             }).error(function(err) {

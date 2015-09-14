@@ -1,13 +1,37 @@
-<ion-view title="Car Detail">
+<ion-view title="Car Detail" cache-view="true" hide-back-button="false">
     <ion-content>
+        <a class="button icon-left ion-chevron-left button-clear button-dark" ui-sref="tab.groups">返回设备组</a>
         <div class="list card">
             <div class="item item-avatar">
-                <img src="../img/car_grey.png" >
+                <img src="img/car_grey.png">
                 <h2>{{ car.name }} </h2>
-                <p> {{car.devtype }}</p>
+                <p> {{ car.devtype }}</p>
             </div>
-            <my-amap devid="{{car.devId}}" lng="{{longitude}}" lat="{{latitude}}">
-            </my-amap>
+            <div class="item item-body" id="{{car.devId}}" style="width:98%; height:400px;">
+            </div>
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item button-full" ng-click="showPosition()">
+                    <i class="icon ion-ios-location"></i> 定位
+                </a>
+                <a class="tab-item" ng-click="showPopup()">
+                    <i class="icon ion-ios-videocam"></i> 轨迹回放
+                </a>
+            </div>
+            <div class="item item-divider"></div>
+            <div class="item">
+                <a class="tab-item" ng-click="getAlarm()">
+                    <i class="icon ion-alert-circled"></i> 报警记录
+                </a>
+            </div>
+            <div class="list">
+                <div class="item item-divider">
+                    <h3>报警列表</h3></div>
+                <div class="item row" ng-repeat="alarm in alarmList">
+                    <span class="col">{{alarm.type}}</span>
+                    <span class="col">{{alarm.msg}}</span>
+                    <span class="col">{{alarm.time}}</span>
+                </div>
+            </div>
         </div>
     </ion-content>
 </ion-view>

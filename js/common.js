@@ -34,12 +34,6 @@ angular.module('starter.common', [])
         msg: "长时间停留报警"
     }])
 
-.constant('Period', [
-    "1小时", "2小时", "3小时", "4小时", "5小时", "6小时", "7小时", "8小时",
-    "9小时", "10小时", "11小时", "12小时", "13小时", "14小时", "15小时", "16小时",
-    "17小时", "18小时", "19小时", "20小时", "21小时", "22小时", "23小时", "24小时"
-])
-
 .constant('TranslatorServerURL', 'http://120.25.227.156:8080/trackService/rest')
 
 // .constant('TranslatorServerURL', 'http://192.168.191.5:8080/trackService/rest')

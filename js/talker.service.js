@@ -35,8 +35,9 @@ AppService.service('Talker', ['$http', '$q', 'TranslatorServerURL', function(htt
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            timeout: 2000
+            timeout: 8000
         }).success(function(data, status, headers, config) {
+            console.log("get http response, the data is:", data);
             deferred.resolve(data);
         }).error(function(err) {
             deferred.reject("error:" + err);

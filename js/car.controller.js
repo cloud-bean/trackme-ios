@@ -1,4 +1,4 @@
-AppController.controller('carCtrl', ['$scope', '$stateParams', 'TransData', 'Car', '$ionicPopup', function($scope, $stateParams, TransData, Car, $ionicPopup) {
+AppController.controller('carCtrl', ['$scope', '$stateParams', 'TransData', 'Talker', 'Car', '$ionicPopup', function($scope, $stateParams, TransData, Talker, Car, $ionicPopup) {
     $scope.latitude = '';
     $scope.longitude = '';
     $scope.car = null;
@@ -7,7 +7,7 @@ AppController.controller('carCtrl', ['$scope', '$stateParams', 'TransData', 'Car
     $scope.pointArr = []; // 轨迹点集合
     $scope.aMap = null;
     $scope.carCamerMarker = null;
-    $scope.isShowCtrlBtn = true;
+    $scope.isShowCtrlBtn = false;
     $scope.locateMarker = null;
 
     Car.getAllCars().then(function(list) {
@@ -28,8 +28,8 @@ AppController.controller('carCtrl', ['$scope', '$stateParams', 'TransData', 'Car
     // get the points and push to $scope.pointArr
     var getPointArr = function(carid, sdate, edate) {
         // a service to get the Arr, as a promise
-        TransData.getTrackList(carid, sdate, edate).then(function(TrackListArr) {
-                console.log(TrackListArr);
+        Talker.getTrackList(carid, sdate, edate).then(function(TrackListArr) {
+                console.log("Get the Track list for Track Record play: " , TrackListArr);
                 if (TrackListArr.length > 0) { // 判读是否有数据列表
                     $scope.pointArr = TrackListArr;
 
@@ -42,7 +42,7 @@ AppController.controller('carCtrl', ['$scope', '$stateParams', 'TransData', 'Car
             })
             .then(markAll($scope.aMap, $scope.pointArr))
             .then(drawPloyline($scope.aMap, $scope.pointArr))
-            .then(initCarCamerMarker())
+            .then(initCarCamerMarker($scope.aMap))
             .then(showCtrlButtons());
     }
 
@@ -62,7 +62,7 @@ AppController.controller('carCtrl', ['$scope', '$stateParams', 'TransData', 'Car
 
     }
 
-    var initCarCamerMarker = function() {
+    var initCarCamerMarker = function(map) {
         if ($scope.carCamerMarker) $scope.carCamerMarker = null;
         var startPosition = $scope.pointArr[0];
         $scope.carCamerMarker = new AMap.Marker({
@@ -93,7 +93,7 @@ AppController.controller('carCtrl', ['$scope', '$stateParams', 'TransData', 'Car
 
     function stopAnimation() {
         $scope.carCamerMarker.stopMove();
-        initCarCamerMarker();
+        initCarCamerMarker($scope.aMap);
     }
 
     $scope.showCtrlButtons = function() {
@@ -133,13 +133,14 @@ AppController.controller('carCtrl', ['$scope', '$stateParams', 'TransData', 'Car
 
     // Triggered on a button click, or some other target
     $scope.showPopup = function() {
-        $scope.data = {}
+        $scope.timeSpanData = {}
+        $scope.timeSpanData.start_time = new Date();
+        $scope.timeSpanData.spanHour = 1;
 
         // An elaborate, custom popup
         var myPopup = $ionicPopup.show({
-            templateFromUrl: 'templates/time_span_popup.html',
+            templateUrl: 'templates/time_span_popup.html',
             title: '查询起始时间',
-            subTitle: '例：2013-11-02 12:34:01',
             scope: $scope,
             buttons: [{
                 text: '取消'
@@ -147,12 +148,13 @@ AppController.controller('carCtrl', ['$scope', '$stateParams', 'TransData', 'Car
                 text: '<b>查询</b>',
                 type: 'button-positive',
                 onTap: function(e) {
-                    if (!$scope.data.start_time && !$scope.data.end_time) {
-                        //don't allow the user to close unless he enters wifi password
-                        e.preventDefault();
-                    } else {
-                        return $scope.data;
-                    }
+                    // if (!$scope.timeSpanData.span) {
+                    //     //don't allow the user to close unless he enters wifi password
+                    //     e.preventDefault();
+                    // } else {
+                    //     return $scope.timeSpanData;
+                    // }
+                     return $scope.timeSpanData;
                 }
             }]
         });
@@ -160,8 +162,9 @@ AppController.controller('carCtrl', ['$scope', '$stateParams', 'TransData', 'Car
             console.log('Tapped!', res);
             if (res) {
                 $scope.start_time = formatAsSimple(res.start_time);
-                $scope.end_time = formatAsSimple(res.end_time);
-
+                $scope.end_time = formatAsSimple(new Date(res.start_time.valueOf() + parseInt(res.spanHour) * 60 * 60 * 1000));
+                console.log("carid: " , $scope.car.devId, "start_time:" + $scope.start_time , "end_time:" + $scope.end_time);
+                getPointArr($scope.car.devId, $scope.start_time, $scope.end_time);
             }
         });
     };

@@ -1,12 +1,17 @@
-<input type="datetime-local" name="start_time" ng-model="data.start_time" placeholder="yyyy-MM-ddTHH:mm:ss" min="2011-01-01T00:00:00" max="2015-12-31T00:00:00" required />
-<input type="datetime-local" name="end_time" ng-model="data.end_time" placeholder="yyyy-MM-ddTHH:mm:ss" min="2011-01-01T00:00:00" max="2015-12-31T00:00:00" required />
-<label class="item item-input item-select">
-    <div class="input-label">
-        Lightsaber
-    </div>
-    <select>
-        <option>Blue</option>
-        <option selected>Green</option>
-        <option>Red</option>
-    </select>
+<label class="item item-input">
+<span  style="display: table;
+  padding: 7px 10px 7px 0px;
+  max-width: 100px;
+  color: #444;
+  font-size: 16px;">
+   起始
+</span>
+<input type="datetime-local" name="start_time" ng-model="timeSpanData.start_time" placeholder="yyyy-MM-dd HH:mm:ss" min="2013-01-01T00:00:00" required />
 </label>
+
+ <div class="item range range-positive">
+   <!-- <i class="icon ion-ios-timer"></i> -->跨度
+    <input type="range" ng-model="timeSpanData.spanHour" min="1" max="24" >
+    <!-- <i class="icon ion-ios-sunny"></i> -->
+    <span>{{timeSpanData.spanHour}}小时</span>
+  </div>

@@ -1,0 +1,23 @@
+<div class="list card">
+    <a href="#" class="item item-icon-left">
+        <i class="icon ion-name"></i> <span ng-bind="{{car.name}}"></span>
+    </a>
+    <a href="#" class="item item-icon-left">
+        <i class="icon ion-position"></i> <span >{{devInfo.pos.latitude}}, {{devInfo.pos.longitude}}"</span>
+    </a>
+    <a href="#" class="item item-icon-left">
+        <i class="icon ion-speed"></i><span >{{devInfo.speed.slice(0,4)}} km/h</span>
+    </a>
+     <a href="#" class="item item-icon-left">
+        <i class="icon ion-distant"></i><span ng-bind="{{devInfo.distant}}"></span>
+    </a>
+     <a href="#" class="item item-icon-left">
+        <i class="icon ion-date"></i><span ng-bind="{{devInfo.date}}"></span>
+    </a>
+     <a href="#" class="item item-icon-left">
+        <i class="icon ion-card"></i><span ng-bind="{{devInfo.voltage}}"></span>
+    </a>
+      <a href="#" class="item item-icon-left">
+        <i class="icon ion-wifi"></i><span ng-bind="{{devInfo.gsmStrength}}"></span>
+    </a>
+</div>

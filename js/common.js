@@ -35,6 +35,5 @@ angular.module('starter.common', [])
     }])
 
 .constant('TranslatorServerURL', 'http://120.25.227.156:8080/trackService/rest')
-
-// .constant('TranslatorServerURL', 'http://192.168.191.5:8080/trackService/rest')
+// .constant('TranslatorServerURL', 'http://192.168.191.2:8080/trackService/rest')
 .constant('WilddogNotifyBaseURL', 'https://track-translator.wilddogio.com/');

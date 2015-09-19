@@ -9,10 +9,10 @@
             </div>
             <div class="item item-body" id="{{car.devId}}" style="width:98%; height:400px;">
             </div>
-            <div id="ctrl-buttons" ng-if="isShowCtrlBtn" style="position:absolute; top:80px; left:20px; font-size:12px; padding:10px; display:block; z-index:99;">
-                <button id="playBtn" class="button button-icon calm icon ion-play" ng-click="startAnimation()"></button>
-                <button id="pauseBtn" class="button button-icon calm icon ion-pause" ng-click="startAnimation()"></button>
-                <button id="stopBtn" class="button button-icon icon ion-stop" ng-click="startAnimation()"></button>
+            <div id="ctrl-buttons" ng-show="isShowCtrlBtn" style="position:absolute; top:80px; left:20px; font-size:12px; padding:10px; display:block; z-index:99;">
+                <a name="playBtn" class="button button-icon calm icon ion-play" ng-click="startAnimation()"></a>
+                <button name="pauseBtn" class="button button-icon calm icon ion-pause" ng-click=""></button>
+                <button name="stopBtn" class="button button-icon icon ion-stop" ng-click="stopAnimation()"></button>
             </div>
             <div class="item tabs tabs-secondary tabs-icon-left">
                 <a class="tab-item button-full" ng-click="showPosition()">

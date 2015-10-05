@@ -7,12 +7,11 @@
                 <h2>{{ car.name }} </h2>
                 <p> {{ car.devtype }}</p>
             </div>
-            <div class="item item-body" id="{{car.devId}}" style="width:98%; height:400px;">
+            <div class="item item-body" id="car_map" style="width:98%; height:400px;">
             </div>
             <div id="ctrl-buttons" ng-show="isShowCtrlBtn" style="position:absolute; top:80px; left:20px; font-size:12px; padding:10px; display:block; z-index:99;">
                 <a name="playBtn" class="button button-icon calm icon ion-play" ng-click="startAnimation()"></a>
-                <button name="pauseBtn" class="button button-icon calm icon ion-pause" ng-click=""></button>
-                <button name="stopBtn" class="button button-icon icon ion-stop" ng-click="stopAnimation()"></button>
+                <a name="stopBtn" class="button button-icon icon ion-stop" ng-click="stopAnimation()"></a>
             </div>
             <div class="item tabs tabs-secondary tabs-icon-left">
                 <a class="tab-item button-full" ng-click="showPosition()">
@@ -21,21 +20,6 @@
                 <a class="tab-item" ng-click="showPopup()">
                     <i class="icon ion-ios-videocam"></i> 轨迹回放
                 </a>
-            </div>
-            <div class="item item-divider"></div>
-            <div class="item">
-                <a class="tab-item" ng-click="getAlarm()">
-                    <i class="icon ion-alert-circled"></i> 报警记录
-                </a>
-            </div>
-            <div class="list">
-                <div class="item item-divider">
-                    <h3>报警列表</h3></div>
-                <div class="item row" ng-repeat="alarm in alarmList">
-                    <span class="col">{{alarm.type}}</span>
-                    <span class="col">{{alarm.msg}}</span>
-                    <span class="col">{{alarm.time}}</span>
-                </div>
             </div>
         </div>
     </ion-content>

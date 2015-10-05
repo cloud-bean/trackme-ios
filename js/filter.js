@@ -12,4 +12,15 @@ angular.module('starter.filter', [])
   }
 })
 
+.filter('cutCharF', function () {
+    return function(origStr){
+      var destStr = "";
+      if (origStr.indexOf("f") > 0) {
+        destStr = origStr.substring(0, origStr.indexOf("f"));
+      }
+      return destStr;
+    }
+  })
+;
+
 

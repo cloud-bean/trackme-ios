@@ -1,5 +1,4 @@
-
-App.config(function($stateProvider, $urlRouterProvider) {
+App.config(function ($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -7,7 +6,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-  // setup an abstract state for the tabs directive
+    // setup an abstract state for the tabs directive
     .state('tab', {
       url: '/tab',
       abstract: true,
@@ -20,6 +19,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
       url: '/dash',
       views: {
         'tab-dash': {
+          cache: true,
           templateUrl: 'templates/tab-dash.html',
           controller: 'DashCtrl'
         }
@@ -30,16 +30,42 @@ App.config(function($stateProvider, $urlRouterProvider) {
       url: '/groups',
       views: {
         'tab-groups': {
+          cache: false,
           templateUrl: 'templates/tab-groups.html',
-          controller: 'CarGroupCtrl'
+          controller: 'CarGroupCtrl',
+          resolve: {
+            username: function ($q, User) {
+              return User.getUsername();
+            }
+          }
         }
       }
     })
-     
-    .state('cars',{
+
+    .state('cars', {
+      cache: false,
       url: '/cars/:id',
       templateUrl: 'templates/car.html',
-      controller:'carCtrl'
+      controller: 'carCtrl'
+    })
+
+    .state('alarm', {
+      cache: false,
+      url: '/alarm',
+      controller: 'alarmCtrl',
+      templateUrl: 'templates/alarm.html'
+    })
+
+    .state('cmd', {
+      cache: false,
+      url: '/cmd',
+      controller: 'cmdCtrl',
+      templateUrl: 'templates/command.html',
+      resolve: {
+        msg: function() {
+          return "";
+        }
+      }
     })
 
     .state('tab.setting', {

@@ -1,0 +1,19 @@
+<ion-view title="报警列表" 
+          cache-view="true" 
+          hide-back-button="false">
+    <ion-content>
+        <a class="button icon-left ion-chevron-left button-clear button-dark" ui-sref="tab.dash">返回主控台</a>
+        <div class="list">
+            <div class="item row">
+                <span class="col">设备 </span>
+                <span class="col">信息 </span>
+                <span class="col">时间 </span>
+            </div>
+            <div class="item row" ng-repeat="alarm in alarmList">
+                <span class="col">{{getCarName(alarm.devid)}}<br/>{{alarm.devid | cutCharF }}</span>
+                <span class="col">{{alarm.alarmType}}</span>
+                <span class="col">{{alarm.alarmTime}}</span>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

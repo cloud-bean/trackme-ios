@@ -1,22 +1,48 @@
-
-AppController.controller('CarGroupCtrl', ['$scope', '$q', 'CarGroup', 'Car', '$ionicLoading', function($scope, $q, CarGroup, Car, loading) {
+AppController.controller('CarGroupCtrl',
+  function ($scope, $q, CarGroup, Car, User, $state,
+            $ionicLoading, username) {
     $scope.groups = [];
     $scope.cars = [];
+    $scope.username = username;
 
-    loading.show({
-        template: "loading"
-    });
+    if ($scope.username.length === 0) {
+      $state.go('tab.dash');
+    }
 
-    var promiseGroup = CarGroup.getGroupList().then(function(groupList) {
+    var promiseGroup = CarGroup.getGroupList(username)
+      .then(function (groupList) {
         $scope.groups = groupList;
-    });
+      });
 
-    var promiseCar = Car.getAllCars().then(function(carsList) {
+    var promiseCar = Car.getAllCars(username)
+      .then(function (carsList) {
         $scope.cars = carsList;
-    });
+      });
 
-    $q.all([promiseGroup, promiseCar]).then(function() {
-        loading.hide();
-    });
+    var init = function () {
+      $ionicLoading.show({
+        template: 'loading data ...'
+      });
 
-}]);
+      $q.all([promiseGroup, promiseCar]).then(function () {
+        $ionicLoading.hide();
+      }).catch(function (err) {
+        console.log('err in get cars and groups ', err);
+        $ionicLoading.hide();
+      });
+    };
+
+    init();
+
+    // TODO: wrong with here
+    $scope.doRefresh = function () {
+      console.log("start to update device..");
+
+      $q.all([promiseGroup, promiseCar])
+        .finally(function () {
+          console.log("end to update device..");
+          $scope.$broadcast('scroll.refreshComplete')
+        })
+    };
+
+  });

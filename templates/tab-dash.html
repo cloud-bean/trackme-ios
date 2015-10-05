@@ -1,30 +1,43 @@
 <ion-view view-title="首页">
     <ion-content class="padding">
-        <div class="list card">
+        <div class="list card" ng-hide="isAuthed">
             <div class="item item-divider">认证登录</div>
             <div class="item item-body">
                 <div class="list">
                     <label class="item item-input">
                         <span class="input-label">用户名</span>
-                        <input type="text" name="username" ng-model="username">
+                        <input type="text" name="username" ng-model="username" ng-change="clearSave()">
                     </label>
                     <label class="item item-input ">
                         <span class="input-label">密码</span>
-                        <input type="password" name="password" ng-model="password">
+                        <input type="password" name="password" ng-model="password" ng-change="clearSave()">
                     </label>
-                  
-                   
-                   <div class="item item-checkbox">
-                    <label class="checkbox">
-                        <input type="checkbox"> 
-                    </label>保存密码
-                   </div>
-                   
+
+                        <ion-checkbox ng-model="isSaved"
+                                      ng-checked="isSaved"
+                                      ng-change="toggleSaved()">
+                                      保存密码
+                        </ion-checkbox>
+                    <!--</div>-->
                     <button class="button button-block button-positive" ng-click="login()">
                         登录
                     </button>
                 </div>
             </div>
+        </div>
+        <div class="list card" ng-show="isAuthed">
+            <a href="#/tab/groups" class="item item-icon-left">
+                <i class="icon ion-ios-list"></i>查看设备
+            </a>
+            <a href="#/alarm" class="item item-icon-left">
+                <i class="icon ion-alert-circled"></i>报警信息
+            </a>
+            <a href="#/cmd" class="item item-icon-left">
+                <i class="icon ion-ios-pulse-strong"></i>下发指令
+            </a>
+            <a class="item item-icon-left" ng-click="logout()">
+                <i class="icon ion-log-out"></i>退出
+            </a>
         </div>
     </ion-content>
 </ion-view>

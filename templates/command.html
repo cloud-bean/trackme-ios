@@ -1,0 +1,28 @@
+<ion-view title="下发指令"
+          hide-back-button="false">
+    <ion-content>
+        <a class="button icon-left ion-chevron-left button-clear button-dark" ui-sref="tab.dash">返回主控台</a>
+        <div class="item item-divider" >
+            <span >
+            <a class="assertive" ng-click="clearMsg()">X</a> &nbsp;&nbsp;
+            状态:&nbsp;&nbsp; {{ msg }}
+        </span>
+        </div>
+
+        <label class="item item-input item-select">
+            <div class="input-label">
+                选择车辆：
+            </div>
+            <select ng-change="selectAction()"
+                    ng-model="selectedOption"
+                    ng-options="(car.name + '-' +  car.devId) group by car.carGroupId for car in carList">
+                <option value="">设备名 - 设备id</option>
+            </select>
+        </label>
+
+        <a class="button button-block positive btn-cmd" ng-click="setDefense()">设防</a>
+        <a class="button button-block positive btn-cmd" ng-click="cancelDefense()">撤防</a>
+        <a class="button button-block positive btn-cmd" ng-click="setPowerSupply()">设置掉电报警</a>
+        <a class="button button-block positive btn-cmd" ng-click="cancelPowerSupply()">取消掉电报警</a>
+    </ion-content>
+</ion-view>

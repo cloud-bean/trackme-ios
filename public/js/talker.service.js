@@ -1,22 +1,23 @@
 AppService.service('Talker',
   ['$http', '$q', 'TranslatorServerURL',
-  function (http, q, trans) {
+  function ($http, $q, TranslatorServerURL) {
+
   this.login = function (username, password) {
-    var deferred = q.defer();
+    var deferred = $q.defer();
     var postData = "username=" + username + "&password=" + password;
 
     console.log("postData " + postData);
 
-    http({
-      url: trans + '/login/login',
+    $http({
+      //url: restApiEndpoint.url + '/login/login',
+      url: TranslatorServerURL + '/login/login',
       method: "POST",
       data: postData,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      timeout: 3000
-    }).success(function (data, status, headers, config) {
-      deferred.resolve(username + '/login');
+      }
+    }).success(function (data) {
+      deferred.resolve(data);
     }).error(function (err) {
       deferred.reject("error:" + err);
     });
@@ -25,7 +26,7 @@ AppService.service('Talker',
   };
 
   this.sendRequestTrackList = function (carid, sdate, edate) {
-    var deferred = q.defer();
+    var deferred = $q.defer();
     var postData = "carId=" + carid + "&start_time=" + sdate + "&end_time=" + edate;
     console.log("postData " + postData);
 
@@ -33,8 +34,8 @@ AppService.service('Talker',
 
     console.log("postData " + postData);
 
-    http({
-      url: trans + '/track/track',
+    $http({
+      url: TranslatorServerURL + '/track/track',
       method: "POST",
       data: postData,
       headers: {

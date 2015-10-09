@@ -43,24 +43,17 @@ AppService.service('TransData', function ($q, User, WilddogNotifyBaseURL) {
 
     loginResultRef.once("value", function (snapshot) {
       var arr = snapshot.val();
-      console.log(arr);
 
       arr
         ? deferred.resolve(arr[Object.keys(arr)[0]])
         : deferred.reject("no data");
 
-    }, function (errorObject) {
-      console.log("The read failed: " + errorObject.code);
-      deferred.reject("The read failed: " + errorObject.code);
+    }, function (err) {
+      deferred.reject(err);
     });
 
     return deferred.promise;
-  }
-
-  this.getAlarmList = function (refString) {
-    //console.log("the hash_id is ", refString);
-    //refString = '522015-09-1711:49:192015-09-1712:49:19';
-    ////522015-09-1711:49:192015-09-1712:49:19
-
   };
+
+
 });

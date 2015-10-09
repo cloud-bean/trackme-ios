@@ -5,10 +5,6 @@ AppController.controller('CarGroupCtrl',
     $scope.cars = [];
     $scope.username = username;
 
-    if ($scope.username.length === 0) {
-      $state.go('tab.dash');
-    }
-
     var promiseGroup = CarGroup.getGroupList(username)
       .then(function (groupList) {
         $scope.groups = groupList;
@@ -32,7 +28,11 @@ AppController.controller('CarGroupCtrl',
       });
     };
 
-    init();
+    if ($scope.username.length === 0) {
+      $state.go('tab.dash');
+    } else {
+      init();
+    }
 
     // TODO: wrong with here
     $scope.doRefresh = function () {

@@ -53,13 +53,13 @@ AppController.controller('DashCtrl',
       User.setUsername(username);
 
       Talker.login(username, password)
-        .then(function (ref) {
-          return TransData.getLoginResult(ref);
-        }, function (err) {
-          $scope.show('err in talker login' + err);
-        })
-        .then(function (userLoginInfo) {
-          $scope.isAuthed = (userLoginInfo.isLogin + "" === "1") ? true : false;
+       .then(function(ref){
+         return TransData.getLoginResult(ref);
+       }, function(err){
+         $scope.show('ref err...' + err);
+       }).then(function (userLoginInfo) {
+         console.log(userLoginInfo);
+          $scope.isAuthed = (userLoginInfo.isLogin + "" === "1");
           User.setLoginState($scope.isAuthed);
 
           if ($scope.isAuthed) {
@@ -76,7 +76,25 @@ AppController.controller('DashCtrl',
 
         });
 
+      // TransData.getLoginResult(username + '/login')
+      // .then(function (userLoginInfo) {
+      //   console.log(userLoginInfo);
+      //   $scope.isAuthed = (userLoginInfo.isLogin + "" === "1");
+      //   User.setLoginState($scope.isAuthed);
 
+      //   if ($scope.isAuthed) {
+      //     $scope.show('登陆成功');
+      //     $timeout(function () {
+      //       $scope.hide();
+      //     }, 500);
+      //   } else {
+      //     $scope.show('验证失败，请重试！');
+      //     $timeout(function () {
+      //       $scope.hide();
+      //     }, 1000);
+      //   }
+      // });
+      
     };
 
     // logout, if set not to save the account info

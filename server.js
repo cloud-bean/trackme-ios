@@ -2,7 +2,7 @@ var express = require('express'),
     app     = express();
 
 // app.use(express.static('platforms/ios/www'));
-app.use(express.static('public'));
+app.use(express.static(__dirname+ '/public'));
 
 // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
 app.all('*', function(req, res, next) {

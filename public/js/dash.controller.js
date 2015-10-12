@@ -66,7 +66,7 @@ AppController.controller('DashCtrl',
             $scope.show('登陆成功');
             $timeout(function () {
               $scope.hide();
-            }, 500);
+            }, 300);
           } else {
             $scope.show('验证失败，请重试！');
             $timeout(function () {
@@ -75,33 +75,17 @@ AppController.controller('DashCtrl',
           }
 
         });
-
-      // TransData.getLoginResult(username + '/login')
-      // .then(function (userLoginInfo) {
-      //   console.log(userLoginInfo);
-      //   $scope.isAuthed = (userLoginInfo.isLogin + "" === "1");
-      //   User.setLoginState($scope.isAuthed);
-
-      //   if ($scope.isAuthed) {
-      //     $scope.show('登陆成功');
-      //     $timeout(function () {
-      //       $scope.hide();
-      //     }, 500);
-      //   } else {
-      //     $scope.show('验证失败，请重试！');
-      //     $timeout(function () {
-      //       $scope.hide();
-      //     }, 1000);
-      //   }
-      // });
-      
     };
 
     // logout, if set not to save the account info
     // clear the form data. set auth state to false.
     $scope.logout = function () {
+      var name = $scope.username;
+      Talker.logout(name).then(function(msg){
+        console.log("logout msg: ", msg);
+      })
       $scope.isAuthed = false;
-      User.setLoginState($scope.isAuthed);
+      User.setLoginState(false);
       User.setUsername("");
       if (!$scope.isSaved) {
         $scope.username = "";

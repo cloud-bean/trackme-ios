@@ -20,7 +20,7 @@ AppService.service('TransData', function ($q, User, WilddogNotifyBaseURL) {
 
   this.getTrackList = function (refString) {
     console.log("the hash_id is ", refString);
-    refString = '522015-09-1711:49:192015-09-1712:49:19';
+    //refString = '522015-09-1711:49:192015-09-1712:49:19';
     //522015-09-1711:49:192015-09-1712:49:19
     var trackListRef = new Wilddog(WilddogNotifyBaseURL + 'tracklist/' + refString);
     var deferred = $q.defer();

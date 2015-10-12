@@ -11,6 +11,8 @@ AppController.controller('carCtrl',
     $scope.isShowCtrlBtn = false;
     $scope.locateMarker = null;
     $scope.animationLine = [];
+    $scope.carState = null;
+    $scope.address = "地址解析中...";
 
     $ionicLoading.show({
       template: "loading..."
@@ -37,10 +39,24 @@ AppController.controller('carCtrl',
         $ionicLoading.show({
           template: "parse data..."
         });
-        if (pos.gprmc) {
-          $scope.latitude = pos.gprmc.latitude;
-          $scope.longitude = pos.gprmc.longitude;
-        }
+
+        // save the car state
+        $scope.carState = pos;
+
+        $scope.latitude = pos.lat;
+        $scope.longitude = pos.lon;
+
+        getAddressByPos($scope.latitude,  $scope.longitude, function(data){
+          try {
+            $scope.address = data.regeocode.formattedAddress;
+            console.log("lnglatXY address is ", $scope.address );
+
+            $scope.$digest();
+          } catch(e){
+
+          }
+        });
+
         $scope.showPosition();
         $ionicLoading.hide();
       })
@@ -48,7 +64,24 @@ AppController.controller('carCtrl',
         $ionicLoading.hide();
       });
 
-
+      var getAddressByPos = function(lat, lng, geocoder_CallBack){
+        var lnglatXY = [lng, lat];
+        
+        var MGeocoder;
+        //加载地理编码插件
+        AMap.service(["AMap.Geocoder"], function() {
+            MGeocoder = new AMap.Geocoder({
+                radius: 1000,
+                extensions: "all"
+            });
+            //逆地理编码
+            MGeocoder.getAddress(lnglatXY, function(status, result) {
+                if (status === 'complete' && result.info === 'OK') {
+                    geocoder_CallBack(result);
+                }
+            });
+        });
+    };
 
     // get the points and push to $scope.pointArr
     var getPointArr = function (carid, sdate, edate) {

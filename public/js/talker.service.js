@@ -9,8 +9,7 @@ AppService.service('Talker',
     console.log("postData " + postData);
 
     $http({
-      //url: restApiEndpoint.url + '/login/login',
-      url: TranslatorServerURL + '/login/login',
+      url: TranslatorServerURL + '/auth/login',
       method: "POST",
       data: postData,
       headers: {
@@ -25,6 +24,23 @@ AppService.service('Talker',
     return deferred.promise;
   };
 
+  this.logout = function(username){
+    var deferred = $q.defer();
+
+    console.log("send get url ");
+
+    $http({
+      url: TranslatorServerURL + '/auth/exit/' + username,
+      method: "GET" 
+    }).success(function (data) {
+      deferred.resolve(data);
+    }).error(function (err) {
+      deferred.reject("error:" + err);
+    });
+
+    return deferred.promise;
+  }
+  
   this.sendRequestTrackList = function (carid, sdate, edate) {
     var deferred = $q.defer();
     var postData = "carId=" + carid + "&start_time=" + sdate + "&end_time=" + edate;

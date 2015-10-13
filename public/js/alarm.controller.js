@@ -15,29 +15,32 @@ AppController.controller('alarmCtrl',
           template: 'loading data...'
         }
       );
+      
       Car.getAllCars(User.getUsername())
-        .then(function (carList) {
-          $scope.carList = carList;
-        }).then(function () {
-          alarmListRef.on("value", function (snapshot) {
-            $scope.alarmList = snapshot.val();
-            try {
-              $scope.$digest();
-            } catch (e){
+        .then(function(data){
+        $scope.carList = data;
+      
+        alarmListRef.on("value", function (snapshot) {
+          $scope.alarmList = snapshot.val();
+          console.log($scope.alarmList);
+          try {
+            $scope.$digest();
+          } catch (e){
 
-            }
-          });
-        }).finally(function () {
+          }
           $ionicLoading.hide();
         });
+      }).finally(function(){
+        $ionicLoading.hide();
+      });
     };
-
+    
     init();
 
     $scope.getCarName = function (devid) {
       console.log('get Car name by devid: ', devid);
 
-      var tid = '';
+      var tid = devid;
       var name = 'unTitled';
       // 历史遗留问题   see[3d4b74](https://github.com/xinnix/Trackme/commit/3d4b748172c362f5170d2f3d153f82357cda16ae)
       if (devid.indexOf("f") > 0) {

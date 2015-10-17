@@ -9,14 +9,21 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');  
 var stripDebug = require('gulp-strip-debug');
 
-gulp.task('minify', function() {
-    return gulp.src(['./public/lib/*.js', './public/app.js', './public/js/*.js'])
+gulp.task('ng-minify', function() {
+    return gulp.src(['./public/app.js', './public/js/*.js'])
         //注意，此处特意如此，避免顺序导致的问题
         .pipe(ngAnnotate())
         .pipe(stripDebug())  
         .pipe(uglify({outSourceMap: false}))  
-        .pipe(concat('all.min.js'))  
+        .pipe(concat('ng.min.js'))
         .pipe(gulp.dest('./public/dist/'))
 });
 
-gulp.task('default', ['minify']);
+gulp.task('pack-all', function () {
+   return gulp.src(['./public/dist/ng.min.js', './lib/*.js'])
+     .pipe(uglify({outSourceMap: false}))
+     .pipe(concat('all.min.js'))
+     .pipe(gulp.dest('./public/dist/'))
+});
+
+gulp.task('default', ['ng-minify', 'pack-all']);

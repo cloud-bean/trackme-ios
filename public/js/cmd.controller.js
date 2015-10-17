@@ -3,7 +3,8 @@
  */
 
 AppController.controller("cmdCtrl",
-  function ($scope, User, Car, $ionicPopup, $ionicLoading, $timeout, msg, $state, Command) {
+  ["$scope", "User", "Car", "$ionicPopup", "$ionicLoading", "msg", "$state", "Command",
+  function ($scope, User, Car, $ionicPopup, $ionicLoading, msg, $state, Command) {
     $scope.msg = msg;
     $scope.carList = [];
     $scope.selectedOption = null;
@@ -98,4 +99,4 @@ AppController.controller("cmdCtrl",
       })
     };
 
-  });
+  }]);

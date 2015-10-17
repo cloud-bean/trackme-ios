@@ -1,7 +1,11 @@
 angular.module('starter.common', [])
-    .constant('Alert', [{
-        code: '64',
-        msg: "非法点火报警"
+.constant('TranslatorServerURL', 'http://120.25.227.156:8080/trackService/rest')
+//.constant('TranslatorServerURL', 'http://localhost:8080/trackService/rest')
+.constant('WilddogNotifyBaseURL', 'https://track-translator.wilddogio.com/')
+//.constant('WDLoggerBaseURL', 'https://track-log.wilddogio.com/')
+.constant('Alert', [{
+    code: '64',
+    msg: "非法点火报警"
     }, {
         code: '11',
         msg: "超速报警"
@@ -32,9 +36,4 @@ angular.module('starter.common', [])
     }, {
         code: '66',
         msg: "长时间停留报警"
-    }])
-
-.constant('TranslatorServerURL', 'http://120.25.227.156:8080/trackService/rest')
-//.constant('TranslatorServerURL', 'http://localhost:8080/trackService/rest')
-.constant('WilddogNotifyBaseURL', 'https://track-translator.wilddogio.com/')
-.constant('WDLoggerBaseURL', 'https://track-log.wilddogio.com/');
+    }]);

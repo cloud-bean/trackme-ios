@@ -40,13 +40,14 @@ AppService.service('Talker',
 
     return deferred.promise;
   }
-  
-  this.sendRequestTrackList = function (carid, sdate, edate) {
-    var deferred = $q.defer();
-    var postData = "carId=" + carid + "&start_time=" + sdate + "&end_time=" + edate;
-    console.log("postData " + postData);
 
-    // var postData="carId=52&start_time=2015-09-17 11:49:19&end_time=2015-09-17 12:49:19";
+    // 弹出框的默认时间是现在时间，选择时间跨度就是过去的时间，因此在这里将start_date和end_date颠倒以符合逻辑。
+  this.sendRequestTrackList = function (username, carid, edate, sdate) {
+    var deferred = $q.defer();
+    var postData = "username=" + username 
+                 + "&carid=" + carid
+                 + "&sdate=" + sdate
+                 + "&edate=" + edate;
 
     console.log("postData " + postData);
 

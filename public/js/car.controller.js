@@ -1,7 +1,10 @@
 AppController.controller('carCtrl',
+  ["$scope", "Car", "User", "TransData",
+    "Talker", "$ionicPopup", "$ionicLoading",
+    "$q", "$stateParams", "$timeout",
   function ($scope, Car, User, TransData,
             Talker, $ionicPopup, $ionicLoading,
-            $q, $stateParams) {
+            $q, $stateParams, $timeout) {
     $scope.latitude = '';
     $scope.longitude = '';
     $scope.devInfo = null;
@@ -13,6 +16,9 @@ AppController.controller('carCtrl',
     $scope.animationLine = [];
     $scope.carState = null;
     $scope.address = "地址解析中...";
+    $scope.trackRef = "";
+    $scope.polyline = null;
+
 
     $ionicLoading.show({
       template: "loading..."
@@ -27,7 +33,7 @@ AppController.controller('carCtrl',
           }
         });
         $ionicLoading.show({
-          template: "car ok, locating..."
+          template: "正在获取设备的最新状态..."
         });
         $scope.car = carObj;
         return carObj;
@@ -84,20 +90,45 @@ AppController.controller('carCtrl',
     };
 
     // get the points and push to $scope.pointArr
-    var getPointArr = function (carid, sdate, edate) {
-      TransData.getTrackList("").then(function (TrackListArr) {
-        if (TrackListArr.length > 0) { // 判读是否有数据列表
-          $scope.pointArr = TrackListArr;
+    var getPointArr = function (username, carid, sdate, edate, spanHour) {
+      Talker.sendRequestTrackList(username, carid, sdate, edate)
+        .then(function(ref) {
+          // Wait for 10 more seconds, then the trans-server will
+          // have the time to put the data on Wilddog.
+          $scope.trackRef = ref;
+        });
 
-          // 移除定位的标记
-          $scope.locateMarker.setMap(null);
-          //  $scope.aMap.setCenter($scope.pointArr[0].latitude, $scope.pointArr[0].longitude);
-          markAll($scope.aMap, $scope.pointArr);
-          drawPloyline($scope.aMap, trackListToLineArr($scope.pointArr));
-          initCarCamerMarker($scope.aMap);
-          $scope.showCtrlButtons()
-        }
+      $ionicLoading.show({
+        template: '查询轨迹历史中...<br/>' + '总计需要' + spanHour + "秒"
       });
+
+      $timeout(function(){
+        $ionicLoading.hide();
+        TransData.getTrackList($scope.trackRef).then(function (TrackListArr) {
+          console.log("TrackListArr", TrackListArr);
+          if (TrackListArr.length > 0) { // 判读是否有数据列表
+            $scope.pointArr = TrackListArr;
+
+            // 移除定位的标记
+            if ($scope.locateMarker != null){
+              $scope.locateMarker.setMap(null);
+            }
+
+            //  $scope.aMap.setCenter($scope.pointArr[0].latitude, $scope.pointArr[0].longitude);
+            markAll($scope.aMap, $scope.pointArr);
+            drawPloyline($scope.aMap, trackListToLineArr($scope.pointArr));
+            initCarCamerMarker($scope.aMap);
+            $scope.showCtrlButtons()
+          } else {
+            $ionicLoading.show({
+              template: "无数据或数据量太多，请注意选择时间段"
+            });
+            $timeout(function () {
+              $ionicLoading.hide();
+            }, 1200);
+          }
+        });
+      }, spanHour * 800);
     };
 
     // show the points on the map
@@ -123,14 +154,18 @@ AppController.controller('carCtrl',
       }
 
       $scope.animationLine = lineArr;
-      console.log('lineArr', lineArr);
       return lineArr;
     };
 
     var initCarCamerMarker = function (map) {
       if ($scope.carCamerMarker) $scope.carCamerMarker = null;
       var startPosition = $scope.pointArr[0];
-      console.log('startPosition is ', startPosition);
+
+
+      if ($scope.carCamerMarker ){
+        $scope.carCamerMarker.setMap(null);
+      }
+
       $scope.carCamerMarker = new AMap.Marker({
         map: map,
         position: [startPosition.longitude, startPosition.latitude],
@@ -140,12 +175,16 @@ AppController.controller('carCtrl',
       });
 
       map.setCenter([startPosition.longitude, startPosition.latitude]);
-      map.setZoom(14);
+      map.setZoom(19);
     };
 
     var drawPloyline = function (map, lineArr) {
       // 绘制轨迹
-      var polyline = new AMap.Polyline({
+      if( $scope.polyline){
+        $scope.polyline.setMap(null);
+      }
+
+      $scope.polyline = new AMap.Polyline({
         map: map,
         path: lineArr,
         strokeColor: "#00a", //线颜色
@@ -176,7 +215,7 @@ AppController.controller('carCtrl',
       if ($scope.car.devId != '' && $scope.longitude != '' && $scope.latitude != '') {
 
         $scope.aMap = $scope.aMap ? $scope.aMap : new AMap.Map("car_map");
-        $scope.aMap.setZoom(12);
+        $scope.aMap.setZoom(19);
 
         position = new AMap.LngLat($scope.longitude, $scope.latitude);
         $scope.aMap.setCenter(position);
@@ -220,9 +259,9 @@ AppController.controller('carCtrl',
         console.log('Tapped!', res);
         if (res) {
           $scope.start_time = formatAsSimple(res.start_time);
-          $scope.end_time = formatAsSimple(new Date(res.start_time.valueOf() + parseInt(res.spanHour) * 60 * 60 * 1000));
+          $scope.end_time = formatAsSimple(new Date(res.start_time.valueOf() - parseInt(res.spanHour) * 60 * 60 * 1000));
           console.log("carid: ", $scope.car.id, "start_time:" + $scope.start_time, "end_time:" + $scope.end_time);
-          getPointArr($scope.car.id, $scope.start_time, $scope.end_time);
+          getPointArr(User.getUsername(), $scope.car.id, $scope.start_time, $scope.end_time, parseInt(res.spanHour));
         }
       });
     };
@@ -248,5 +287,5 @@ AppController.controller('carCtrl',
       }
     }
 
-  })
-;
+  }]);
+

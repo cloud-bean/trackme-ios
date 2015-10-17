@@ -1,4 +1,6 @@
 AppController.controller('CarGroupCtrl',
+  ["$scope", "$q", "CarGroup", "Car", "User", "$state",
+    "$ionicLoading", "username",
   function ($scope, $q, CarGroup, Car, User, $state,
             $ionicLoading, username) {
     $scope.groups = [];
@@ -45,4 +47,4 @@ AppController.controller('CarGroupCtrl',
         })
     };
 
-  });
+  }]);

@@ -1,6 +1,6 @@
 
-AppController.controller('SettingCtrl', function($scope) {
+AppController.controller('SettingCtrl',["$scope", function($scope) {
     $scope.settings = {
         enableFriends: true
     };
-});
+}]);

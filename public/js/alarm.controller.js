@@ -1,4 +1,5 @@
 AppController.controller('alarmCtrl',
+  ["$scope", "WilddogNotifyBaseURL", "$ionicLoading", "$state", "User", "Car",
   function ($scope, WilddogNotifyBaseURL, $ionicLoading, $state, User, Car) {
     $scope.alarmList = [];
     $scope.carList = [];
@@ -55,4 +56,4 @@ AppController.controller('alarmCtrl',
 
       return name;
     }
-  });
+  }]);

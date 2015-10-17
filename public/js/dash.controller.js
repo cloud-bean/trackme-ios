@@ -1,4 +1,6 @@
 AppController.controller('DashCtrl',
+  ["$scope", "Talker", "TransData", "User", "store",
+  "$ionicLoading", "$timeout",
   function ($scope, Talker, TransData, User, store,
             $ionicLoading,
             $timeout) {
@@ -63,12 +65,12 @@ AppController.controller('DashCtrl',
           User.setLoginState($scope.isAuthed);
 
           if ($scope.isAuthed) {
-            $scope.show('登陆成功');
+            $scope.show('登陆成功！');
             $timeout(function () {
               $scope.hide();
             }, 300);
           } else {
-            $scope.show('验证失败，请重试！');
+            $scope.show('账号或密码错，请重试！');
             $timeout(function () {
               $scope.hide();
             }, 1000);
@@ -83,7 +85,7 @@ AppController.controller('DashCtrl',
       var name = $scope.username;
       Talker.logout(name).then(function(msg){
         console.log("logout msg: ", msg);
-      })
+      });
       $scope.isAuthed = false;
       User.setLoginState(false);
       User.setUsername("");
@@ -93,4 +95,4 @@ AppController.controller('DashCtrl',
       }
     };
 
-  });
+  }]);

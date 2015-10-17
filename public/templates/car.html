@@ -6,17 +6,7 @@
                 <img src="img/car_grey.png">
                 <h2>{{ car.name }} </h2>
                 <p> {{ car.devtype }}</p>
-                <div ng-show="carState">
-                    <p>坐标&nbsp;&nbsp;纬度 {{ carState.lat }} &nbsp;经度{{ carState.lon }}</p>
-                    <p>速度 {{ carState.speed }}KM/h</p>
-                    <p>里程 {{ carState.distant }} KM</p>
-                    <p>更新 {{ carState.date }}</p>
-                    <p>温度 {{ carState.temperature }}&#8451;</p>
-                    <p>电压 {{ carState.voltage }}V</p>
-                    <p>ACC状态 {{ carState.accState }}</p>
-                    <p>信号强度 {{ carState.gsmStrength }}</p>
-                    <p>地址 {{ address }}</p>
-                </div>
+
             </div>
             <div class="item item-body" id="car_map" style="width:98%; height:400px;">
             </div>
@@ -31,6 +21,17 @@
                 <a class="tab-item" ng-click="showPopup()">
                     <i class="icon ion-ios-videocam"></i> 轨迹回放
                 </a>
+            </div>
+            <div class="item item-body" ng-show="carState">
+                <p>坐标&nbsp;&nbsp;纬度 {{ carState.lat }} &nbsp;经度{{ carState.lon }}</p>
+                <p>速度 {{ carState.speed }}KM/h</p>
+                <p>里程 {{ carState.distant }} KM</p>
+                <p>更新 {{ carState.date }}</p>
+                <p>温度 {{ carState.temperature }}&#8451;</p>
+                <p>电压 {{ carState.voltage }}V</p>
+                <p>ACC状态 {{ carState.accState }}</p>
+                <p>信号强度 {{ carState.gsmStrength }}</p>
+                <p>地址 {{ address }}</p>
             </div>
         </div>
     </ion-content>

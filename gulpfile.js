@@ -19,11 +19,11 @@ gulp.task('ng-minify', function() {
         .pipe(gulp.dest('./public/dist/'))
 });
 
-gulp.task('pack-all', function () {
-   return gulp.src(['./public/dist/ng.min.js', './lib/*.js'])
+gulp.task('vendor', function () {
+   return gulp.src(['./public/lib/*.js'])
      .pipe(uglify({outSourceMap: false}))
-     .pipe(concat('all.min.js'))
+     .pipe(concat('vendor.min.js'))
      .pipe(gulp.dest('./public/dist/'))
 });
 
-gulp.task('default', ['ng-minify', 'pack-all']);
+gulp.task('default', ['ng-minify', 'vendor']);
